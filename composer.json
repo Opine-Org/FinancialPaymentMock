@@ -3,7 +3,7 @@
     "type": "library",
     "minimum-stability": "dev",
     "description": "",
-    "keywords": [""],
+    "keywords": ["A mock service for charging credit cards"],
     "license": "MIT",
     "authors": [
         {
