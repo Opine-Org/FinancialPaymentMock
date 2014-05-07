@@ -20,6 +20,6 @@
         "opine/container": "dev-master"
     },
     "autoload": {
-        "psr-4": {"Opine\": "src/"}
+        "psr-4": {"Opine\\": "src/"}
     }
 }
