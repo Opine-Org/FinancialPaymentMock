@@ -54,4 +54,8 @@ class FinancialPaymentMock {
         ];
         return false;
     }
+
+    public function rollback ($response) {
+        return true;
+    }
 }
