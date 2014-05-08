@@ -25,20 +25,20 @@
 namespace Opine;
 
 class FinancialPaymentMock {
-    public function payment ($description, $amount, array $paymentInfo, array $billingInfo, &$response) {
+    public function payment ($orderId, $description, $amount, array $billingInfo, array $paymentInfo, &$response) {
         if (empty($description)) {
             throw new \Exception('Invalid Description');
         }
         if (!is_numeric($amount) || $amount === 0) {
             throw new \Exception('Invalid Amount');
         }
-        if (!isset($paymentInfo['number'])) {
+        if (!isset($paymentInfo['creditcard_number'])) {
             throw new \Exception('Card Number not set');
         }
-        if (!isset($paymentInfo['expiration'])) {
-            throw new \Exception('expiration');
+        if (!isset($paymentInfo['creditcard_expiration_year']) || !isset($paymentInfo['creditcard_expiration_month'])) {
+            throw new \Exception('Invalid card expiration');
         }
-        if ($paymentInfo['number'] == '1111111111111111') {
+        if ($paymentInfo['creditcard_number'] == '1111111111111111') {
             $response = [
                 'success' => true,
                 'transaction_id' => uniqid(),
@@ -55,8 +55,8 @@ class FinancialPaymentMock {
         return false;
     }
 
-    public function authorize ($description, $amount, array $paymentInfo, array $billingInfo, &$response) {
-        return $this->payment($description, $amount, $paymentInfo, $billingInfo, $response);
+    public function authorize ($orderId, $description, $amount, array $billingInfo, array $paymentInfo, &$response) {
+        return $this->payment($orderId, $description, $amount, $billingInfo, $paymentInfo, $response);
     }
 
     public function rollback ($response) {
