@@ -1,3 +1,4 @@
+<?php
 /**
  * Opine\FinancialPaymentMock
  *
@@ -24,4 +25,33 @@
 namespace Opine;
 
 class FinancialPaymentMock {
+    public function payment ($description, $amount, array $paymentInfo, array $billingInfo, &$response) {
+        if (empty($description)) {
+            throw new \Exception('Invalid Description');
+        }
+        if (!is_numeric($amount) || $amount === 0) {
+            throw new \Exception('Invalid Amount');
+        }
+        if (!isset($paymentInfo['number'])) {
+            throw new \Exception('Card Number not set');
+        }
+        if (!isset($paymentInfo['expiration'])) {
+            throw new \Exception('expiration');
+        }
+        if ($paymentInfo['number'] == '1111111111111111') {
+            $response = [
+                'success' => true,
+                'transaction_id' => uniqid(),
+                'response' => 'ok'
+            ];
+            return true;
+        }
+        $response = [
+            'success' => false,
+            'errorMessage' => 'Invalid card number',
+            'errorCode' => 400,
+            'response' => 'error'
+        ];
+        return false;
+    }
 }
