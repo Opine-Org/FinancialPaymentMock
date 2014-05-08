@@ -55,6 +55,10 @@ class FinancialPaymentMock {
         return false;
     }
 
+    public function authorize ($description, $amount, array $paymentInfo, array $billingInfo, &$response) {
+        return $this->payment($description, $amount, $paymentInfo, $billingInfo, $response);
+    }
+
     public function rollback ($response) {
         return true;
     }
